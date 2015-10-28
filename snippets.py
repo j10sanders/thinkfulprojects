@@ -44,7 +44,7 @@ def catalog():
     logging.info("Retrieving all the keywords: {!r}")
     cursor = connection.cursor()
     with connection, connection.cursor() as cursor:
-        cursor.execute("select * from snippets keywords")
+        cursor.execute("select keywords from snippets")
         column = cursor.fetchall()
     logging.debug("Snippet retrieved successfully.")
     return column[0:]
@@ -54,7 +54,7 @@ def like(snippet):
     logging.info("Retrieving all similar snippets: {!r}")
     cursor = connection.cursor()
     with connection, connection.cursor() as cursor:
-        cursor.execute("select * from snippets where message like %s", (snippet,))
+        cursor.execute("select * from snippets where message like %s'", (snippet,))
         row = cursor.fetchall()
     logging.debug("Snippets retrieved successfully.")
     return row[0:]
@@ -88,7 +88,9 @@ def main():
     # Convert parsed arguments from Namespace to dictionary
     arguments = vars(arguments)
     command = arguments.pop("command")
-
+    
+    
+    
     if command == "put":
         name, snippet = put(**arguments)
         print("Stored {!r} as {!r}".format(snippet, name))
@@ -101,7 +103,9 @@ def main():
     elif command == "like":
         snippet = like(**arguments)
         print("Retrieved similar snippet(s): {!r}".format(snippet))
-    
+        logging.info('%s', type(snippet))
+        print(type(snippet))
+
 
 if __name__ == "__main__":
     main()
