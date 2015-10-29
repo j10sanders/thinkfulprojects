@@ -57,7 +57,8 @@ def like(snippet):
         cursor.execute("select * from snippets where message like %s", ("%" + snippet + "%",))
         table = cursor.fetchall()
     logging.debug("Snippets retrieved successfully.")
-    return [row[0] for row in table]
+    lines = [row[0] for row in table]
+    return lines[0]
 
 def main():
     """Main function"""
