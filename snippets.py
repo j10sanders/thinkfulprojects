@@ -44,20 +44,20 @@ def catalog():
     logging.info("Retrieving all the keywords: {!r}")
     cursor = connection.cursor()
     with connection, connection.cursor() as cursor:
-        cursor.execute("select keywords from snippets")
-        column = cursor.fetchall()
+        cursor.execute("select keyword from snippets")
+        table = cursor.fetchall()
     logging.debug("Snippet retrieved successfully.")
-    return column[0:]
+    return [row[0] for row in table]
     
 def like(snippet):
     """Retrieve list of all the similar snippets"""
     logging.info("Retrieving all similar snippets: {!r}")
     cursor = connection.cursor()
     with connection, connection.cursor() as cursor:
-        cursor.execute("select * from snippets where message like %s'", (snippet,))
-        row = cursor.fetchall()
+        cursor.execute("select * from snippets where message like %s", ("%" + snippet + "%",))
+        table = cursor.fetchall()
     logging.debug("Snippets retrieved successfully.")
-    return row[0:]
+    return [row[0] for row in table]
 
 def main():
     """Main function"""
@@ -104,7 +104,6 @@ def main():
         snippet = like(**arguments)
         print("Retrieved similar snippet(s): {!r}".format(snippet))
         logging.info('%s', type(snippet))
-        print(type(snippet))
 
 
 if __name__ == "__main__":
