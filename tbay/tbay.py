@@ -30,7 +30,7 @@ class Item(Base):
     start_time = Column(DateTime, default=datetime.utcnow)
     
     seller = relationship("User", backref="seller")
-    #item_bid = Column(Integer, ForeignKey('bid.id'), nullable=False)
+    bid = Column(Integer, ForeignKey('bid.id'), nullable=False)
     item_bid = relationship("Bid", backref="item_price")
 
 class Bid(Base):
