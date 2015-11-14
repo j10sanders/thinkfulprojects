@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Hello {{firstname.title() + " " + lastname.title()}}</h1>
+    <p>
+        Your jedi name is {{lastname[:3].title() + firstname[:2]}}
+    </p>
+{% endblock %}
